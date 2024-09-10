@@ -109,6 +109,11 @@
             const childQuantity = parseInt(document.getElementById('childQuantity').value);
             const adultQuantity = parseInt(document.getElementById('adultQuantity').value);
             const seniorQuantity = parseInt(document.getElementById('seniorQuantity').value);
+               if(childQuantity==0 && adultQuantity==0 && seniorQuantity==0)
+               {
+            alert("Please enter valid quantities for all ticket types.");
+        return; 
+          }
 
             // Calculate total amount
             const totalAmount = (childQuantity * childPrice) + (adultQuantity * adultPrice) + (seniorQuantity * seniorPrice);
