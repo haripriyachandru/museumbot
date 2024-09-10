@@ -3,99 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Receipt</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Indiana State Museum Admission</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Verdana', sans-serif;
             background: linear-gradient(to right, #ff6f61, #de1c70);
+            color: #fff;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
-        .receipt-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 600px;
-            width: 100%;
+        .container {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            color: #333;
         }
         h1 {
             color: #064b91;
-            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            font-weight: bold;
         }
-        h2 {
-            color:rgb(115, 250, 115);
-            text-align: center;
-        }
-        .receipt-section {
+        label {
+            display: block;
             margin-top: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #ecf0f1;
-        }
-        .receipt-section p {
-            margin: 5px 0;
+            font-size: 1.1em;
+            font-weight: 600;
             color: #2c3e50;
         }
-        hr {
-            margin: 20px 0;
+        .price-info {
+            font-size: 1.2em;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        input[type="number"] {
+            width: 80px;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 1px solid #bdc3c7;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input[type="number"]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+            outline: none;
         }
         button {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #064b91;
-            color: white;
+            margin-top: 30px;
+            padding: 15px 25px;
+            background: #3498db;
+            color: #fff;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 1.2em;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
         button:hover {
-            background-color: #041d2e;
+            background: #2980b9;
+            transform: scale(1.05);
         }
-
+        button:active {
+            background: #1f4f7b;
+        }
     </style>
 </head>
 <body>
-    <div class="receipt-container">
-        <h1>Payment Receipt</h1>
-        <h2>PAYMENT SUCCESSFULL</h2>
-        <div class="receipt-section">
-            <h3>Indiana State Museum Admission Receipt</h3>
-            <p><strong>Child Tickets:</strong> <span id="childTicket"></span></p>
-            <p><strong>Adult Tickets:</strong> <span id="adultTicket"></span></p>
-            <p><strong>Senior Tickets:</strong> <span id="seniorTicket"></span></p>
-            <hr>
-            <p><strong>Total Amount:</strong> INR <span id="totalAmountReceipt"></span></p>
-        </div>
-        <h2>Enter your Email-Id:</h2>
-        <form id="email-form">
-            <label for="email_receiver">Receiver Email:</label>
-            <input type="email" id="email_receiver" name="email_receiver" required><br><br>
-            <button type="button" onclick="alert('Check your mail')">Submit</button>
+    <div class="container">
+        <h1> Museum Booking</h1>
+        <form id="ticketForm">
+            <label for="childQuantity">Child (Below 18 years)</label>
+            <span class="price-info">INR 20.00</span>
+            <input type="number" id="childQuantity" name="childQuantity" value="0" min="0">
 
+            <label for="adultQuantity">Adult</label>
+            <span class="price-info">INR 75.00</span>
+            <input type="number" id="adultQuantity" name="adultQuantity" value="0" min="0">
+
+            <label for="seniorQuantity">Foreign Nationals</label>
+            <span class="price-info">INR 500.00</span>
+            <input type="number" id="seniorQuantity" name="seniorQuantity" value="0" min="0">
+        </form>
+            <button type="button" onclick="redirectToPayment()">Proceed to Payment</button>
+        
     </div>
 
     <script>
-        // Parse URL parameters to get ticket and total info
-        const urlParams = new URLSearchParams(window.location.search);
-        const childQuantity = urlParams.get('child');
-        const adultQuantity = urlParams.get('adult');
-        const seniorQuantity = urlParams.get('senior');
-        const totalAmount = urlParams.get('total');
+        function redirectToPayment() {
+            // Prices
+            const childPrice = 20.00;
+            const adultPrice = 75.00;
+            const seniorPrice = 500.00;
 
-        // Display receipt details
-        document.getElementById('childTicket').innerText = `${childQuantity} `;
-        document.getElementById('adultTicket').innerText = `${adultQuantity}  `;
-        document.getElementById('seniorTicket').innerText = `${seniorQuantity}`;
-        document.getElementById('totalAmountReceipt').innerText = totalAmount;
+            // Quantities
+            const childQuantity = parseInt(document.getElementById('childQuantity').value);
+            const adultQuantity = parseInt(document.getElementById('adultQuantity').value);
+            const seniorQuantity = parseInt(document.getElementById('seniorQuantity').value);
+            if(childQuantity==0 && adultQuantity==0 && seniorQuantity==0)
+        {
+            alert("Please enter valid quantities for all ticket types.");
+        return; 
+    }
+            // Calculate total amount
+            const totalAmount = (childQuantity * childPrice) + (adultQuantity * adultPrice) + (seniorQuantity * seniorPrice) +(childQuantity * 20.00) + (adultQuantity * 75.00) + (seniorQuantity * 500.00);            ;
+
+            // Redirect to payment page with parameters in the URL
+            window.location.href = `pay1.html?child=${childQuantity}&adult=${adultQuantity}&senior=${seniorQuantity}&total=${totalAmount.toFixed(2)}`;
+        }
+
     </script>
 </body>
 </html>
